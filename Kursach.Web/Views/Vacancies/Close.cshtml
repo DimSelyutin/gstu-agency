@@ -1,0 +1,22 @@
+@model VacancyCloseViewModel
+@{
+    ViewData["Title"] = "Закрытие вакансии";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>Вакансия: <strong>@Model.Title</strong></p>
+
+<form asp-action="Close" asp-route-id="@Model.VacancyId" method="post">
+    <input type="hidden" asp-for="VacancyId" />
+    <input type="hidden" asp-for="Title" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="HiredInterviewId" class="form-label"></label>
+        <select asp-for="HiredInterviewId" asp-items="ViewBag.HiredInterviewId" class="form-select"></select>
+        <span asp-validation-for="HiredInterviewId" class="text-danger"></span>
+        <div class="form-text">Доступны собеседования со статусом «Пройдено» или «Назначено».</div>
+    </div>
+    <button type="submit" class="btn btn-warning">Закрыть вакансию</button>
+    <a asp-action="Details" asp-route-id="@Model.VacancyId" class="btn btn-secondary">Отмена</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

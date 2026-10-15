@@ -1,0 +1,16 @@
+@model Skill
+@{
+    ViewData["Title"] = "Навык";
+}
+
+<h1>@ViewData["Title"]</h1>
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Id)</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Name)</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+</dl>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">К списку</a>
+</div>

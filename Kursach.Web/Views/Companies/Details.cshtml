@@ -1,0 +1,20 @@
+@model Company
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h1>@Model.Name</h1>
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Industry)</dt>
+    <dd class="col-sm-9">@Model.Industry?.Name</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Phone)</dt>
+    <dd class="col-sm-9">@Model.Phone</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Email)</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Address)</dt>
+    <dd class="col-sm-9">@(Model.Address ?? "—")</dd>
+</dl>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">К списку</a>
+</div>

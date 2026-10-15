@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="Kursach.Tests/Kursach.Tests.csproj" />
+  <Project Path="Kursach.Web/Kursach.Web.csproj" />
+</Solution>

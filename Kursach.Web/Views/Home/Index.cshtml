@@ -1,0 +1,52 @@
+﻿@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<h1 class="mb-4">Кадровое агентство</h1>
+<p class="text-muted">Сводка по данным системы подбора персонала.</p>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Соискатели</h5>
+                <p class="display-6">@Model.ApplicantCount</p>
+                <a asp-controller="Applicants" asp-action="Index" class="btn btn-outline-primary btn-sm">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Компании</h5>
+                <p class="display-6">@Model.CompanyCount</p>
+                <a asp-controller="Companies" asp-action="Index" class="btn btn-outline-primary btn-sm">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Вакансии</h5>
+                <p class="display-6">@Model.VacancyCount</p>
+                <p class="mb-2"><span class="text-muted">Открытых:</span> <strong>@Model.OpenVacancyCount</strong></p>
+                <a asp-controller="Vacancies" asp-action="Index" class="btn btn-outline-primary btn-sm">Перейти</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Собеседования</h5>
+                <p class="display-6">@Model.InterviewCount</p>
+                <a asp-controller="Interviews" asp-action="Index" class="btn btn-outline-primary btn-sm">Перейти</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="list-group">
+    <a asp-controller="Vacancies" asp-action="OpenByIndustry" class="list-group-item list-group-item-action">Отчёт: открытые вакансии по сфере</a>
+    <a asp-controller="Vacancies" asp-action="ClosedReport" class="list-group-item list-group-item-action">Отчёт: закрытые вакансии за период</a>
+</div>

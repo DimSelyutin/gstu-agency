@@ -1,0 +1,37 @@
+@model dynamic
+@{
+    var page = (int)Model.PageNumber;
+    var totalPages = (int)Model.TotalPages;
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var query = Context.Request.Query
+        .Where(q => !string.Equals(q.Key, "page", StringComparison.OrdinalIgnoreCase))
+        .ToDictionary(q => q.Key, q => (string?)q.Value.ToString());
+}
+
+@if (totalPages > 1)
+{
+    <nav aria-label="Пагинация" class="mt-3">
+        <ul class="pagination flex-wrap">
+            <li class="page-item @(page <= 1 ? "disabled" : "")">
+                @{
+                    query["page"] = (page - 1).ToString();
+                }
+                <a class="page-link" asp-action="@action" asp-controller="@controller" asp-all-route-data="query">Назад</a>
+            </li>
+            @for (var i = Math.Max(1, page - 2); i <= Math.Min(totalPages, page + 2); i++)
+            {
+                query["page"] = i.ToString();
+                <li class="page-item @(i == page ? "active" : "")">
+                    <a class="page-link" asp-action="@action" asp-controller="@controller" asp-all-route-data="query">@i</a>
+                </li>
+            }
+            <li class="page-item @(page >= totalPages ? "disabled" : "")">
+                @{
+                    query["page"] = (page + 1).ToString();
+                }
+                <a class="page-link" asp-action="@action" asp-controller="@controller" asp-all-route-data="query">Вперёд</a>
+            </li>
+        </ul>
+    </nav>
+}

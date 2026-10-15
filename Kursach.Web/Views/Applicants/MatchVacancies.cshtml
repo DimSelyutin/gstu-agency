@@ -1,0 +1,43 @@
+@model IReadOnlyList<VacancyMatchViewModel>
+@{
+    var applicant = (Applicant)ViewBag.Applicant!;
+    ViewData["Title"] = $"Подбор для {applicant.FullName}";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p class="text-muted">Открытые вакансии, отсортированные по совпадению навыков.</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Должность</th>
+            <th>Компания</th>
+            <th>Сфера</th>
+            <th>Оклад</th>
+            <th>Совпадение</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.CompanyName</td>
+            <td>@item.IndustryName</td>
+            <td>@item.Salary.ToString("N2")</td>
+            <td>@item.MatchedSkills / @item.RequiredSkills (@($"{item.MatchRatio:P0}"))</td>
+            <td>
+                <a asp-controller="Vacancies" asp-action="Details" asp-route-id="@item.VacancyId" class="btn btn-sm btn-outline-secondary">Вакансия</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Подходящих открытых вакансий не найдено.</p>
+}
+
+<a asp-action="Details" asp-route-id="@applicant.Id" class="btn btn-secondary">К соискателю</a>

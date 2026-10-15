@@ -1,0 +1,55 @@
+@model ClosedVacancyReportViewModel
+@{
+    ViewData["Title"] = "Отчёт: закрытые вакансии";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Дата с</label>
+        <input type="date" name="from" value="@Model.From?.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Дата по</label>
+        <input type="date" name="to" value="@Model.To?.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-md-2 align-self-end">
+        <button type="submit" class="btn btn-secondary">Сформировать</button>
+    </div>
+</form>
+
+<div class="row mb-3">
+    <div class="col-md-4"><strong>Вакансий:</strong> @Model.TotalCount</div>
+    <div class="col-md-4"><strong>Сумма окладов:</strong> @Model.TotalSalary.ToString("N2")</div>
+    <div class="col-md-4"><strong>Средний оклад:</strong> @Model.AverageSalary.ToString("N2")</div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Должность</th>
+            <th>Компания</th>
+            <th>Принят</th>
+            <th>Дата закрытия</th>
+            <th>Оклад</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.CompanyName</td>
+            <td>@(string.IsNullOrEmpty(item.HiredApplicantName) ? "—" : item.HiredApplicantName)</td>
+            <td>@item.ClosedDate.ToString("dd.MM.yyyy")</td>
+            <td>@item.Salary.ToString("N2")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@if (!Model.Items.Any())
+{
+    <p class="text-muted">Нет данных за выбранный период.</p>
+}

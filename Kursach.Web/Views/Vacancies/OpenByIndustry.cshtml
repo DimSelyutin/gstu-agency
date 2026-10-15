@@ -1,0 +1,50 @@
+@model PagedListViewModel<Vacancy>
+@{
+    ViewData["Title"] = "Открытые вакансии по сфере";
+    var filter = (FilterParams)ViewBag.Filter!;
+    var industryId = ViewBag.SelectedIndustryId as int?;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <select name="industryId" asp-items="ViewBag.IndustryId" class="form-select">
+            <option value="">Все сферы</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <input type="search" name="Search" value="@filter.Search" class="form-control" placeholder="Должность" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-secondary">Показать</button>
+        <a asp-action="OpenByIndustry" asp-route-reset="1" class="btn btn-outline-secondary">Сброс</a>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Должность</th>
+            <th>Компания</th>
+            <th>Сфера</th>
+            <th>Оклад</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Company?.Name</td>
+            <td>@item.Company?.Industry?.Name</td>
+            <td>@item.Salary.ToString("N2")</td>
+            <td><a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Подробнее</a></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<p class="text-muted">Всего: @Model.TotalCount</p>
+@await Html.PartialAsync("_Pager", Model)

@@ -1,0 +1,35 @@
+@model Applicant
+@{
+    ViewData["Title"] = Model.FullName;
+}
+
+<h1>@Model.FullName</h1>
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Education)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(m => m.Education)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.ExperienceYears)</dt>
+    <dd class="col-sm-9">@Model.ExperienceYears</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.DesiredSalary)</dt>
+    <dd class="col-sm-9">@Model.DesiredSalary.ToString("N2")</dd>
+</dl>
+
+<h2 class="h5 mt-4">Навыки</h2>
+@if (Model.ApplicantSkills.Any())
+{
+    <ul>
+        @foreach (var skill in Model.ApplicantSkills.OrderBy(s => s.Skill?.Name))
+        {
+            <li>@(skill.Skill?.Name ?? skill.SkillId.ToString()) — уровень @skill.Level</li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted">Навыки не указаны.</p>
+}
+
+<div class="mt-3">
+    <a asp-action="MatchVacancies" asp-route-id="@Model.Id" class="btn btn-success">Подбор вакансий</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">К списку</a>
+</div>

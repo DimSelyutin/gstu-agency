@@ -1,0 +1,33 @@
+@model Interview
+@{
+    ViewData["Title"] = "Изменение собеседования";
+}
+
+<h1>@ViewData["Title"]</h1>
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Date" class="form-label"></label>
+        <input asp-for="Date" class="form-control" type="date" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ApplicantId" class="form-label"></label>
+        <select asp-for="ApplicantId" asp-items="ViewBag.ApplicantId" class="form-select"></select>
+        <span asp-validation-for="ApplicantId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="VacancyId" class="form-label"></label>
+        <select asp-for="VacancyId" asp-items="ViewBag.VacancyId" class="form-select"></select>
+        <span asp-validation-for="VacancyId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Result" class="form-label"></label>
+        <select asp-for="Result" asp-items="Html.GetEnumSelectList<InterviewResult>()" class="form-select"></select>
+        <span asp-validation-for="Result" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

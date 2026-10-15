@@ -1,0 +1,20 @@
+@model Interview
+@{
+    ViewData["Title"] = "Собеседование";
+}
+
+<h1>@ViewData["Title"]</h1>
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Date)</dt>
+    <dd class="col-sm-9">@Model.Date.ToString("dd.MM.yyyy")</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Applicant)</dt>
+    <dd class="col-sm-9">@Model.Applicant?.FullName</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Vacancy)</dt>
+    <dd class="col-sm-9">@Model.Vacancy?.Title (@Model.Vacancy?.Company?.Name)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(m => m.Result)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(m => m.Result)</dd>
+</dl>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">К списку</a>
+</div>

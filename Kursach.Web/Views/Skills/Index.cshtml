@@ -1,0 +1,48 @@
+@model PagedListViewModel<Skill>
+@{
+    ViewData["Title"] = "Навыки";
+    var filter = (FilterParams)ViewBag.Filter!;
+    var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>@ViewData["Title"]</h1>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input type="search" name="Search" value="@filter.Search" class="form-control" placeholder="Поиск по названию" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-secondary">Найти</button>
+        <a asp-action="Index" asp-route-reset="1" class="btn btn-outline-secondary">Сброс</a>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td class="text-end text-nowrap">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-returnUrl="@returnUrl" class="btn btn-sm btn-outline-primary">Изменить</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" asp-route-returnUrl="@returnUrl" class="btn btn-sm btn-outline-danger">Удалить</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<p class="text-muted">Всего: @Model.TotalCount</p>
+@await Html.PartialAsync("_Pager", Model)
